@@ -18,7 +18,3 @@ services:
       - './configs/freeswitch:/etc/freeswitch'
       - './configs/freeswitch-sounds:/usr/share/freeswitch/sounds'
       - './configs/freeswitch-logs/freeswitch.log:/var/log/freeswitch/freeswitch.log'
-
-    cap_add:
-      - SYS_NICE   # Required for setting nice levels
-    privileged: true  # Allow elevated privileges for scheduler settings
