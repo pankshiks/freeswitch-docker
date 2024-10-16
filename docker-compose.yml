@@ -10,7 +10,6 @@ services:
       - "64000-64100:64000-64100/udp"
       - "5066:5066/tcp"
       - "9443:7443"
-    network_mode: "host"
 
     environment:
       SOUND_RATES: "32000:48000"
