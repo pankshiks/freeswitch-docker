@@ -1,20 +1,21 @@
+version: '3.8'
+
 services:
   freeswitch:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: freeswitch
-    image: safarov/freeswitch
-    ports:
-      - "5060:5060/udp"
-      - "5080:5080/udp"
-      - "64000-64100:64000-64100/udp"
-      - "5066:5066/tcp"
-      - "9443:7443"
-
-    environment:
-      SOUND_RATES: "32000:48000"
-      SOUND_TYPES: "music:en-us-callie"
-      EPMD: "false"
-      DUMPCAP: "false"
     volumes:
-      - './configs/freeswitch:/etc/freeswitch'
-      - './configs/freeswitch-sounds:/usr/share/freeswitch/sounds'
-      - './configs/freeswitch-logs/freeswitch.log:/var/log/freeswitch/freeswitch.log'
+      - freeswitch_data:/usr/local/freeswitch
+    ports:
+    - "5060:5060"              # SIP
+    - "5080:5080"              # Alternate SIP
+    - "16385-32769:16384-32768" # RTP (changed starting port to avoid conflicts)
+    environment:
+      - TIMEZONE=UTC
+    restart: unless-stopped
+
+volumes:
+  freeswitch_data:
+    driver: local
