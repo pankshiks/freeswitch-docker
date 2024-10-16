@@ -1,6 +1,4 @@
-version: "3.2"
 services:
-
   freeswitch:
     container_name: freeswitch
     image: safarov/freeswitch
@@ -13,10 +11,14 @@ services:
 
     environment:
       SOUND_RATES: "32000:48000"
-      SOUND_TYPES: "en-us-allison"
+      SOUND_TYPES: "music:en-us-callie"
       EPMD: "false"
       DUMPCAP: "false"
     volumes:
       - './configs/freeswitch:/etc/freeswitch'
       - './configs/freeswitch-sounds:/usr/share/freeswitch/sounds'
       - './configs/freeswitch-logs/freeswitch.log:/var/log/freeswitch/freeswitch.log'
+
+    cap_add:
+      - SYS_NICE   # Required for setting nice levels
+    privileged: true  # Allow elevated privileges for scheduler settings
